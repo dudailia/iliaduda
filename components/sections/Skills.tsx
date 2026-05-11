@@ -40,15 +40,31 @@ function SkillCard({ label, skills, cardIndex }: { label: string; skills: string
                 animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.85 }}
                 transition={{ duration: 0.25, delay: j * 0.025, ease: 'easeOut' }}
                 onClick={() => toggle(skill)}
+                onMouseEnter={e => {
+                  if (!isSelected) {
+                    const el = e.currentTarget
+                    el.style.background = 'var(--blue-light)'
+                    el.style.borderColor = 'var(--blue-mid)'
+                    el.style.color = 'var(--blue)'
+                  }
+                }}
+                onMouseLeave={e => {
+                  if (!isSelected) {
+                    const el = e.currentTarget
+                    el.style.background = 'var(--surface-2)'
+                    el.style.borderColor = 'var(--border)'
+                    el.style.color = 'var(--ink-2)'
+                  }
+                }}
                 className="font-mono transition-all duration-150"
                 style={{
                   fontSize: '11px',
                   padding: '5px 10px',
                   borderRadius: '5px',
                   cursor: 'pointer',
-                  border: `1px solid ${isSelected ? 'var(--blue-mid)' : 'var(--border)'}`,
-                  background: isSelected ? 'var(--blue-light)' : 'var(--surface-2)',
-                  color: isSelected ? 'var(--blue)' : 'var(--ink-2)',
+                  border: `1px solid ${isSelected ? 'var(--blue-dark)' : 'var(--border)'}`,
+                  background: isSelected ? 'var(--blue)' : 'var(--surface-2)',
+                  color: isSelected ? '#ffffff' : 'var(--ink-2)',
                 }}
               >
                 {skill}
