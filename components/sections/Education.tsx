@@ -1,5 +1,7 @@
+'use client'
 import { AnimateIn } from '@/components/ui/AnimateIn'
 import { SectionTag } from '@/components/ui/SectionTag'
+import { ShutterTitle } from '@/components/ui/ShutterTitle'
 import { education } from '@/lib/data'
 
 export function Education() {
@@ -8,9 +10,9 @@ export function Education() {
       <div className="mx-auto max-w-content">
         <AnimateIn className="mb-12">
           <SectionTag>05 — Education</SectionTag>
-          <h2 className="font-display font-bold text-navy" style={{ fontSize: '40px', lineHeight: 1.15 }}>
+          <ShutterTitle className="font-display font-bold text-navy" style={{ fontSize: '40px', lineHeight: 1.15 }}>
             Academic background.
-          </h2>
+          </ShutterTitle>
         </AnimateIn>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

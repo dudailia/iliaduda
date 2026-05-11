@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import { AnimateIn } from '@/components/ui/AnimateIn'
 import { SectionTag } from '@/components/ui/SectionTag'
+import { ShutterTitle } from '@/components/ui/ShutterTitle'
 
 export function About() {
   return (
@@ -43,9 +44,9 @@ export function About() {
           <div className="flex flex-col gap-5">
             <AnimateIn>
               <SectionTag>00 — About</SectionTag>
-              <h2 className="font-display font-bold text-navy mt-1" style={{ fontSize: '32px', lineHeight: 1.2 }}>
+              <ShutterTitle className="font-display font-bold text-navy mt-1" style={{ fontSize: '32px', lineHeight: 1.2 }}>
                 Quantitative analyst.<br />Engineer. Entrepreneur.
-              </h2>
+              </ShutterTitle>
             </AnimateIn>
 
             <AnimateIn delay={80}>

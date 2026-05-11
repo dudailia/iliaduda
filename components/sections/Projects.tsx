@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { ExternalLink } from 'lucide-react'
 import { AnimateIn } from '@/components/ui/AnimateIn'
 import { SectionTag } from '@/components/ui/SectionTag'
+import { ShutterTitle } from '@/components/ui/ShutterTitle'
 import { projects } from '@/lib/data'
 
 function ProjectCard({ project }: { project: typeof projects[0] }) {
@@ -106,9 +107,9 @@ export function Projects() {
       <div className="mx-auto max-w-content">
         <AnimateIn className="mb-12">
           <SectionTag>03 — Projects</SectionTag>
-          <h2 className="font-display font-bold text-navy mb-2" style={{ fontSize: '40px', lineHeight: 1.15 }}>
+          <ShutterTitle className="font-display font-bold text-navy mb-2" style={{ fontSize: '40px', lineHeight: 1.15 }}>
             Things I&apos;ve built.
-          </h2>
+          </ShutterTitle>
           <p className="font-body text-ink-2" style={{ fontSize: '16px' }}>
             Production systems, academic research, and everything in between.
           </p>

@@ -3,6 +3,7 @@ import { useState, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { AnimateIn } from '@/components/ui/AnimateIn'
 import { SectionTag } from '@/components/ui/SectionTag'
+import { ShutterTitle } from '@/components/ui/ShutterTitle'
 import { skillGroups } from '@/lib/data'
 
 function SkillCard({ label, skills, cardIndex }: { label: string; skills: string[]; cardIndex: number }) {
@@ -83,9 +84,9 @@ export function Skills() {
       <div className="mx-auto max-w-content">
         <AnimateIn className="mb-12">
           <SectionTag>04 — Skills</SectionTag>
-          <h2 className="font-display font-bold text-navy" style={{ fontSize: '40px', lineHeight: 1.15 }}>
+          <ShutterTitle className="font-display font-bold text-navy" style={{ fontSize: '40px', lineHeight: 1.15 }}>
             What I work with.
-          </h2>
+          </ShutterTitle>
         </AnimateIn>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {skillGroups.map((group, i) => (
