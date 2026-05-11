@@ -37,6 +37,14 @@ export const metadata: Metadata = {
     type: 'website',
   },
   robots: { index: true, follow: true },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ilia Duda — Quantitative Finance & AI Engineering',
+    description: 'Building at the intersection of financial markets and machine intelligence.',
+  },
+  alternates: {
+    canonical: 'https://iliaduda.com',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

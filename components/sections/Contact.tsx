@@ -1,13 +1,13 @@
 'use client'
-import { Mail, Link, GitFork, ArrowRight } from 'lucide-react'
+import { Mail, ExternalLink, ArrowRight } from 'lucide-react'
 import { AnimateIn } from '@/components/ui/AnimateIn'
 import { SectionTag } from '@/components/ui/SectionTag'
 import { personal } from '@/lib/data'
 
 const ROWS = [
   { Icon: Mail, type: 'EMAIL', value: personal.email, href: `mailto:${personal.email}` },
-  { Icon: Link, type: 'LINKEDIN', value: 'linkedin.com/in/ilia-duda', href: personal.linkedin },
-  { Icon: GitFork, type: 'GITHUB', value: 'github.com/dudailia', href: personal.github },
+  { Icon: ExternalLink, type: 'LINKEDIN', value: 'linkedin.com/in/ilia-duda', href: personal.linkedin },
+  { Icon: ExternalLink, type: 'GITHUB', value: 'github.com/dudailia', href: personal.github },
 ]
 
 export function Contact() {
