@@ -6,7 +6,7 @@ export function ScrollProgress() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 z-[9999] h-[2px] origin-left"
+      className="fixed top-0 left-0 right-0 z-[9999] h-[2px] origin-left hidden md:block"
       style={{ scaleX, backgroundColor: 'var(--blue)' }}
     />
   )

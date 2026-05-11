@@ -14,7 +14,7 @@ export function Experience() {
   const lineScaleY = useTransform(scrollYProgress, [0, 1], [0, 1])
 
   return (
-    <section id="experience" className="py-24 md:py-28 px-6 bg-surface-2">
+    <section id="experience" className="py-16 md:py-28 px-5 md:px-6 bg-surface-2">
       <div className="mx-auto max-w-content">
         <AnimateIn className="mb-14">
           <SectionTag>02 — Experience</SectionTag>
@@ -55,7 +55,7 @@ export function Experience() {
 
                   {/* Card */}
                   <div
-                    className="p-6 rounded-[10px] transition-all duration-200"
+                    className="p-4 md:p-6 rounded-[10px] transition-all duration-200"
                     style={{
                       background: 'var(--surface)',
                       border: '1px solid var(--border)',

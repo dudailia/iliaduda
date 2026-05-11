@@ -6,7 +6,7 @@ import { projects } from '@/lib/data'
 
 export function Projects() {
   return (
-    <section id="projects" className="py-24 md:py-28 px-6 bg-surface">
+    <section id="projects" className="py-16 md:py-28 px-5 md:px-6 bg-surface">
       <div className="mx-auto max-w-content">
         <AnimateIn className="mb-12">
           <SectionTag>03 — Projects</SectionTag>

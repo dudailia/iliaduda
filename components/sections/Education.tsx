@@ -4,7 +4,7 @@ import { education } from '@/lib/data'
 
 export function Education() {
   return (
-    <section id="education" className="py-24 md:py-28 px-6 bg-surface">
+    <section id="education" className="py-16 md:py-28 px-5 md:px-6 bg-surface">
       <div className="mx-auto max-w-content">
         <AnimateIn className="mb-12">
           <SectionTag>05 — Education</SectionTag>

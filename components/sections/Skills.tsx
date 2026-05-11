@@ -63,7 +63,7 @@ function SkillCard({ label, skills, cardIndex }: { label: string; skills: string
 
 export function Skills() {
   return (
-    <section id="skills" className="py-24 md:py-28 px-6 bg-surface-2">
+    <section id="skills" className="py-16 md:py-28 px-5 md:px-6 bg-surface-2">
       <div className="mx-auto max-w-content">
         <AnimateIn className="mb-12">
           <SectionTag>04 — Skills</SectionTag>

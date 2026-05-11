@@ -12,7 +12,7 @@ const ROWS = [
 
 export function Contact() {
   return (
-    <section id="contact" className="py-24 md:py-28 px-6 bg-surface-2">
+    <section id="contact" className="py-16 md:py-28 px-5 md:px-6 bg-surface-2">
       <div className="mx-auto max-w-content text-center">
         <AnimateIn>
           <SectionTag className="justify-center text-center">06 — Contact</SectionTag>
@@ -24,7 +24,7 @@ export function Contact() {
           </p>
         </AnimateIn>
 
-        <div className="flex flex-col gap-3 mx-auto" style={{ maxWidth: '600px' }}>
+        <div className="flex flex-col gap-3 mx-auto w-full" style={{ maxWidth: 'min(600px, 100%)' }}>
           {ROWS.map(({ Icon, type, value, href }, i) => (
             <AnimateIn key={type} delay={i * 80}>
               <a

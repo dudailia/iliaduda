@@ -5,19 +5,20 @@ import { SectionTag } from '@/components/ui/SectionTag'
 
 export function About() {
   return (
-    <section id="about" className="py-24 md:py-28 px-6" style={{ background: 'var(--surface)' }}>
+    <section id="about" className="py-16 md:py-28 px-5 md:px-6" style={{ background: 'var(--surface)' }}>
       <div className="mx-auto max-w-content">
         <div className="grid grid-cols-1 md:grid-cols-[45%_55%] gap-12 md:gap-16 items-start">
 
           {/* Left: photo */}
           <AnimateIn direction="left">
+            <div className="w-full md:w-auto">
             <div
               className="relative overflow-hidden mx-auto md:mx-0"
               style={{
                 borderRadius: '12px',
                 border: '1px solid var(--border)',
                 background: 'var(--surface-2)',
-                maxWidth: '340px',
+                maxWidth: 'min(280px, 100%)',
                 aspectRatio: '3/4',
               }}
             >
@@ -34,6 +35,7 @@ export function About() {
               <div className="absolute inset-0 flex items-center justify-center">
                 <span className="font-display font-bold text-6xl" style={{ color: 'var(--border-strong)' }}>ID</span>
               </div>
+            </div>
             </div>
           </AnimateIn>
 
