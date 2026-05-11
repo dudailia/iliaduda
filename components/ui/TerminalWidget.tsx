@@ -98,12 +98,23 @@ export function TerminalWidget() {
     }, restartDelay)
   }
 
+  const containerRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
-    runSequence()
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current)
-    }
-  }, [])
+    const el = containerRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          observer.disconnect()
+          runSequence()
+        }
+      },
+      { threshold: 0.3 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Blinking cursor
   useEffect(() => {
@@ -113,6 +124,7 @@ export function TerminalWidget() {
 
   return (
     <div
+      ref={containerRef}
       className="w-full rounded-xl overflow-hidden"
       style={{
         background: '#0F172A',
@@ -141,7 +153,7 @@ export function TerminalWidget() {
 
       {/* Content */}
       <div className="p-5" style={{ minHeight: '240px' }}>
-        <div className="font-mono text-[12px] leading-[1.7] space-y-0">
+        <div className="font-mono leading-[1.7] space-y-0" style={{ fontSize: 'clamp(10px, 1.5vw, 12px)' }}>
           {SEQUENCE.map((seqLine, i) => {
             if (seqLine.text === '' || seqLine.pause) {
               return <div key={i} className="h-3" />

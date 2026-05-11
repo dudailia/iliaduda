@@ -75,7 +75,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col overflow-hidden"
+      className="relative min-h-[100svh] flex flex-col overflow-hidden"
       style={{ paddingTop: '60px' }}
     >
       {/* Dot grid */}
@@ -137,7 +137,7 @@ export function Hero() {
               transition={{ duration: 0.3, delay: 0.5 }}
               className="font-display font-extrabold text-navy mt-5"
               style={{
-                fontSize: 'clamp(52px, 7vw, 88px)',
+                fontSize: 'clamp(36px, 8vw, 88px)',
                 letterSpacing: '-0.03em',
                 lineHeight: 0.95,
               }}
@@ -175,7 +175,7 @@ export function Hero() {
                 <a
                   href={personal.resume}
                   download
-                  className="inline-flex items-center justify-center gap-2 font-body font-medium text-white rounded-[7px] transition-all duration-[180ms]"
+                  className="inline-flex items-center justify-center gap-2 font-body font-medium text-white rounded-[7px] transition-all duration-[180ms] w-full sm:w-auto"
                   style={{ background: 'var(--navy)', padding: '12px 24px', fontSize: '14px' }}
                   onMouseEnter={e => (e.currentTarget.style.background = 'var(--blue-dark)')}
                   onMouseLeave={e => (e.currentTarget.style.background = 'var(--navy)')}
@@ -188,7 +188,7 @@ export function Hero() {
               <MagneticButton>
                 <a
                   href="#contact"
-                  className="inline-flex items-center justify-center font-body rounded-[7px] transition-all duration-[180ms]"
+                  className="inline-flex items-center justify-center font-body rounded-[7px] transition-all duration-[180ms] w-full sm:w-auto"
                   style={{
                     background: 'transparent',
                     border: '1px solid var(--border-strong)',
@@ -254,7 +254,7 @@ export function Hero() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 1.6, ease: EASE }}
-            className="flex flex-col items-start gap-3"
+            className="flex flex-col items-start gap-3 w-full"
           >
             <TerminalWidget />
 
