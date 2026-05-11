@@ -1,0 +1,193 @@
+export const personal = {
+  name: "Ilia Duda",
+  role: "Quantitative Finance · AI Engineering",
+  tagline: "Building at the intersection of financial markets and machine intelligence.",
+  location: "Boston, MA",
+  email: "duda.i@northeastern.edu",
+  linkedin: "https://linkedin.com/in/ilia-duda",
+  github: "https://github.com/dudailia",
+  resume: "/resume.pdf",
+  available: "Open to Co-op · July 2026",
+}
+
+export const stats = [
+  { value: 4, suffix: "T+", label: "AUM at Target Employer", prefix: "$" },
+  { value: 20, suffix: "+", label: "Instruments Tracked", prefix: "" },
+  { value: 3, suffix: "", label: "Production Systems Live", prefix: "" },
+  { value: 2, suffix: "", label: "Countries, Finance Exp.", prefix: "" },
+]
+
+export const experience = [
+  {
+    id: "state-street",
+    company: "State Street Global Advisors",
+    role: "Investment Management Co-op",
+    sub: "Supporting the Chief Investment Strategist",
+    location: "Boston, MA",
+    period: "Jul 2026 – Dec 2026",
+    incoming: true,
+    type: "finance",
+    bullets: [
+      "Incoming co-op at one of the world's largest asset managers ($4.4T AUM), supporting the Chief Investment Strategist team across macro research and investment communications.",
+    ],
+    tags: ["Investment Management", "Macro Research", "SSGA"],
+  },
+  {
+    id: "glacier",
+    company: "Glacier Capital Systems",
+    role: "Quantitative Software Engineer",
+    sub: "",
+    location: "Remote",
+    period: "Jan 2026 – Present",
+    incoming: false,
+    type: "quant",
+    bullets: [
+      "Sole engineer for a proprietary options trading firm; built the full Python research stack: market scanner, multi-factor scoring engine, options chain analyzer, volatility surface model, regime detector, news sentiment parser, and position sizer covering 20+ instruments with all strategy parameters externalized to YAML.",
+      "Designed a two-component strategy engine combining short-dated premium-collection trades (0–10 DTE, ~10% OTM) and longer-dated directional positions (20–90 DTE, delta 0.30–0.60); enforced hard risk gates on R/R, probability of profit, spread cost ceiling, and pair-correlation.",
+      "Replaced brittle macOS cron + email pipeline with a real-time trade-alert dashboard (Next.js 15 / Supabase Realtime / Fly.io Python worker) rescanning candidates every 5 minutes during market hours.",
+    ],
+    tags: ["Python", "Black-Scholes", "Volatility Surface", "Next.js", "Supabase", "Fly.io"],
+  },
+  {
+    id: "closebooks",
+    company: "CloseBooks",
+    role: "Founder & Full-Stack Engineer",
+    sub: "",
+    location: "Boston, MA",
+    period: "2024 – Present",
+    incoming: false,
+    type: "startup",
+    bullets: [
+      "Founded and built an AI-powered month-end close automation platform for CPA firms; multi-tenant Next.js 14 / Supabase (PostgreSQL + Row Level Security) on Vercel with Stripe-billed three-tier subscription pricing, built as sole engineer.",
+      "Engineered an LLM-based transaction categorization pipeline using the Anthropic Claude API that auto-maps bank statement line items to a client's chart of accounts, reducing manual reconciliation to flagged exceptions only.",
+      "Conducted ICP-targeted outreach to Boston-area CPA firms, delivered live demos; in active partnership conversations with a bookkeeping firm in Canton, MA.",
+    ],
+    tags: ["Next.js", "TypeScript", "Supabase", "Anthropic API", "Stripe"],
+  },
+  {
+    id: "bcs",
+    company: "BCS Bank — Investment Banking Division",
+    role: "Investment Banking Analyst Intern",
+    sub: "",
+    location: "Moscow, Russia",
+    period: "Jul – Aug 2023",
+    incoming: false,
+    type: "finance",
+    bullets: [
+      "Covered Russian energy (Lukoil, Novatek, Tatneft), metals (Severstal, Mechel), and banking sectors; built DCF, comparable company, and sensitivity models supporting client-facing equity research.",
+      "Wrote daily market briefings on OFZ bond movements, oil and gas equity flows, and MOEX activity, translating Bank of Russia policy into desk-relevant macro takeaways.",
+    ],
+    tags: ["DCF Modeling", "Equity Research", "OFZ Bonds", "Macro Analysis"],
+  },
+  {
+    id: "monito",
+    company: "Monito — Young Enterprise UK",
+    role: "Co-Founder & Financial Director",
+    sub: "",
+    location: "Bromsgrove, UK",
+    period: "Sep 2022 – Sep 2023",
+    incoming: false,
+    type: "startup",
+    bullets: [
+      "Co-founded student venture that won UK National Company of the Year and advanced to the European Finals — top outcome in Young Enterprise UK.",
+      "Led the finance function: budgeting, pricing strategy, P&L; built investor pitch materials; coordinated a five-person team through regional and national rounds.",
+    ],
+    tags: ["Entrepreneurship", "UK National Winner", "European Finalist"],
+  },
+]
+
+export const projects = [
+  {
+    id: "glacier-engine",
+    title: "Options Trading Infrastructure",
+    company: "Glacier Capital Systems",
+    description: "Full Python research stack for a live options trading firm. Multi-factor scoring, volatility surface modeling, regime detection, sentiment parsing. Real-time Next.js dashboard with 5-min rescan cadence. Covers 20+ instruments in production.",
+    tech: ["Python", "YAML", "Black-Scholes", "Next.js 15", "Supabase Realtime", "Fly.io"],
+    type: "Quantitative Finance",
+    status: "Live in Production",
+    statusColor: "green" as const,
+    metrics: ["20+ instruments", "5-min rescan", "Real-time alerts"],
+    links: { github: null as string | null, live: null as string | null },
+    featured: true,
+  },
+  {
+    id: "closebooks",
+    title: "CloseBooks — AI Bookkeeping SaaS",
+    company: "Founder",
+    description: "Multi-tenant SaaS automating month-end close for CPA firms. LLM pipeline maps bank statement line items to chart of accounts. Three-tier Stripe billing, Row Level Security, deployed on Vercel.",
+    tech: ["Next.js 14", "TypeScript", "Supabase", "Anthropic API", "Stripe"],
+    type: "AI / SaaS",
+    status: "Active — Seeking Partners",
+    statusColor: "blue" as const,
+    metrics: ["Multi-tenant", "LLM categorization", "3-tier billing"],
+    links: { github: null as string | null, live: "https://closebooks-app.vercel.app" },
+    featured: true,
+  },
+  {
+    id: "quant-notebook",
+    title: "Quantitative Finance Research",
+    company: "FINA 4335 — Northeastern University",
+    description: "Fama-French 3-factor regressions, Black-Scholes engine, CAPM backtesting, Sharpe ratio annualization, maximum drawdown analysis with rigorous look-ahead bias controls. Perfect 65/65 autograder score.",
+    tech: ["Python", "pandas", "statsmodels", "yfinance", "Jupyter"],
+    type: "Academic Research",
+    status: "65/65 — Perfect Score",
+    statusColor: "green" as const,
+    metrics: ["Fama-French", "Black-Scholes", "65/65"],
+    links: { github: "https://github.com/dudailia" as string | null, live: null as string | null },
+    featured: false,
+  },
+  {
+    id: "glacier-analytics",
+    title: "Long/Short Performance Analytics",
+    company: "Glacier Capital Systems",
+    description: "Comprehensive analytics package for a SMCI long + 5 short positions portfolio. 7-sheet Excel workbook, 7 professional charts including performance attribution, drawdown analysis, scenario modeling.",
+    tech: ["Python", "pandas", "matplotlib", "openpyxl"],
+    type: "Financial Analytics",
+    status: "+5.3% Alpha Delivered",
+    statusColor: "green" as const,
+    metrics: ["+23.3% total return", "+5.3% vs S&P 500", "7 charts"],
+    links: { github: null as string | null, live: null as string | null },
+    featured: false,
+  },
+]
+
+export const skillGroups = [
+  {
+    label: "Programming",
+    skills: ["Python", "TypeScript", "JavaScript", "SQL", "pandas", "NumPy", "SciPy", "scikit-learn", "PyTorch", "matplotlib"],
+  },
+  {
+    label: "Quantitative Finance",
+    skills: ["Options Pricing", "Black-Scholes", "Greeks", "Volatility Surface", "Portfolio Construction", "Fama-French", "CAPM", "DCF Modeling", "Equity Research", "OFZ Bonds", "Macro Analysis"],
+  },
+  {
+    label: "AI & Machine Learning",
+    skills: ["LLM Pipelines", "Anthropic Claude API", "NLP", "Generative AI", "Statistical Hypothesis Testing", "Regression Analysis"],
+  },
+  {
+    label: "Web & Infrastructure",
+    skills: ["Next.js 15", "React", "Supabase", "PostgreSQL", "Vercel", "Fly.io", "Git", "Stripe", "Jupyter"],
+  },
+]
+
+export const education = {
+  university: "Northeastern University",
+  college: "College of Science",
+  degree: "B.S. Mathematics and Business Administration",
+  period: "2024 – May 2028",
+  location: "Boston, MA",
+  courses: [
+    "Probability & Statistical Theory",
+    "Partial Differential Equations",
+    "Stochastic Processes (Markov Chains, Queueing Theory)",
+    "Mathematical Statistics",
+    "Linear Algebra",
+    "Investments",
+    "Corporate Finance",
+    "Blockchain Applications in Finance",
+  ],
+  certifications: [
+    { name: "DataCamp AI Engineer for Data Scientists Associate", year: "2026" },
+    { name: "IBM Generative AI in Action", year: "2026" },
+  ],
+}
