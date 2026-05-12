@@ -1,27 +1,23 @@
-import { Nav } from '@/components/layout/Nav'
-import { Footer } from '@/components/layout/Footer'
+import type { Metadata } from 'next'
 import { Hero } from '@/components/sections/Hero'
-import { About } from '@/components/sections/About'
-import { Experience } from '@/components/sections/Experience'
-import { Projects } from '@/components/sections/Projects'
-import { Skills } from '@/components/sections/Skills'
-import { Education } from '@/components/sections/Education'
-import { Contact } from '@/components/sections/Contact'
+import { ValueProp } from '@/components/home/ValueProp'
+import { ExperiencePreview } from '@/components/home/ExperiencePreview'
+import { ProjectsPreview } from '@/components/home/ProjectsPreview'
+import { HomeCTA } from '@/components/home/HomeCTA'
 
-export default function Page() {
+export const metadata: Metadata = {
+  title: 'Ilia Duda — Quantitative Finance & AI Engineering',
+  description: 'Mathematics & Business student at Northeastern University. Building at the intersection of financial markets and machine intelligence.',
+}
+
+export default function HomePage() {
   return (
-    <>
-      <Nav />
-      <main>
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <Skills />
-        <Education />
-        <Contact />
-      </main>
-      <Footer />
-    </>
+    <main>
+      <Hero />
+      <ValueProp />
+      <ExperiencePreview />
+      <ProjectsPreview />
+      <HomeCTA />
+    </main>
   )
 }
