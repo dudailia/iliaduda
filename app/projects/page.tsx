@@ -10,7 +10,7 @@ function ProjectCard({ project, compact = false }: { project: typeof projects[0]
   return (
     <Link href={`/projects/${project.slug}`} className="block h-full">
       <div
-        className="group flex flex-col h-full cursor-pointer transition-all duration-200"
+        className="shimmer-card group flex flex-col h-full cursor-pointer transition-all duration-200"
         style={{
           background: 'var(--surface)',
           border: '1px solid var(--border)',

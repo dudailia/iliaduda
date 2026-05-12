@@ -30,7 +30,12 @@ export function ValueProp() {
                   onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--blue-mid)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.transform = '' }}
                 >
-                  {Icon && <Icon size={24} style={{ color: 'var(--blue)', marginBottom: '16px' }} />}
+                  <div className="flex items-center justify-between mb-4">
+                    {Icon && <Icon size={24} style={{ color: 'var(--blue)' }} />}
+                    <span className="font-mono text-ink-3" style={{ fontSize: '11px', letterSpacing: '0.1em' }}>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  </div>
                   <h3 className="font-display font-bold text-navy mb-2" style={{ fontSize: '18px' }}>{prop.title}</h3>
                   <p className="font-body text-ink-2" style={{ fontSize: '14px', lineHeight: 1.65 }}>{prop.description}</p>
                 </div>

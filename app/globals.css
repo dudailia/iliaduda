@@ -62,3 +62,26 @@ body {
 ::selection { background: #BFDBFE; color: var(--navy); }
 
 :focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+
+/* Project card shimmer */
+.shimmer-card {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+.shimmer-card:hover::after {
+  animation: card-shimmer 0.6s ease forwards;
+}
+@keyframes card-shimmer {
+  to { left: 150%; }
+}
