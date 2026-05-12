@@ -1,20 +1,10 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
-import { ArrowRight, ArrowLeft } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import { experience } from '@/lib/data'
-
-const GlacierChart = dynamic(() => import('@/components/charts/GlacierChart'), { ssr: false, loading: () => <div style={{ height: 240 }} /> })
-
-const CHARTS: Record<string, React.ComponentType> = {
-  'glacier-capital': GlacierChart,
-}
-
-const CHART_TITLES: Record<string, string> = {
-  'glacier-capital': 'Strategy Performance vs. SPY — Simulated YTD',
-}
+import { ExperienceChartLoader } from '@/components/charts/ExperienceChartLoader'
 
 interface Props { params: Promise<{ slug: string }> }
 
@@ -38,9 +28,6 @@ export default async function ExperienceDetailPage({ params }: Props) {
 
   const idx = experience.findIndex(e => e.slug === slug)
   const next = experience[(idx + 1) % experience.length]
-  const ChartComponent = CHARTS[slug]
-  const chartTitle = CHART_TITLES[slug]
-
   return (
     <main style={{ background: 'var(--bg)' }}>
       {/* Hero */}
@@ -122,14 +109,7 @@ export default async function ExperienceDetailPage({ params }: Props) {
             {/* Sidebar */}
             <div className="space-y-4">
               {/* Chart */}
-              {ChartComponent && (
-                <motion.div initial="hidden" whileInView="show" variants={fadein} viewport={{ once: true }}>
-                  <div className="rounded-xl p-6" style={{ background: 'var(--navy)' }}>
-                    {chartTitle && <p className="font-mono text-[10px] uppercase tracking-widest mb-4" style={{ color: 'rgba(255,255,255,0.35)' }}>{chartTitle}</p>}
-                    <ChartComponent />
-                  </div>
-                </motion.div>
-              )}
+              <ExperienceChartLoader slug={slug} />
 
               {/* Skills */}
               <motion.div initial="hidden" whileInView="show" variants={fadein} viewport={{ once: true }}>

@@ -1,12 +1,10 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { ArrowLeft, ExternalLink } from 'lucide-react'
 import { projects } from '@/lib/data'
-
-const ProjectChart = dynamic(() => import('@/components/charts/ProjectChart'), { ssr: false, loading: () => <div style={{ height: 160 }} /> })
+import { ProjectChartLoader } from '@/components/charts/ProjectChartLoader'
 
 interface Props { params: Promise<{ slug: string }> }
 
@@ -95,12 +93,7 @@ export default async function ProjectDetailPage({ params }: Props) {
             <div className="space-y-4">
               {/* Chart for projects with data */}
               {p.chartData && (
-                <motion.div initial="hidden" whileInView="show" variants={fadein} viewport={{ once: true }}>
-                  <div className="rounded-xl p-5" style={{ background: 'var(--navy)' }}>
-                    <p className="font-mono text-[10px] uppercase tracking-widest mb-3" style={{ color: 'rgba(255,255,255,0.35)' }}>PERFORMANCE CHART</p>
-                    <ProjectChart data={p.chartData} accentColor={p.accentColor} />
-                  </div>
-                </motion.div>
+                <ProjectChartLoader data={p.chartData} accentColor={p.accentColor} />
               )}
 
               {/* Tech stack */}
