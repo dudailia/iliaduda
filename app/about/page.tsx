@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import { AnimateIn } from '@/components/ui/AnimateIn'
+import { PhotoWithFallback } from '@/components/about/PhotoWithFallback'
 import { SectionTag } from '@/components/ui/SectionTag'
 import { ShutterTitle } from '@/components/ui/ShutterTitle'
 import { SkillsInteractive } from '@/components/about/SkillsInteractive'
@@ -44,23 +44,7 @@ export default function AboutPage() {
             {/* Photo */}
             <AnimateIn direction="left">
               <div className="mx-auto md:mx-0" style={{ maxWidth: '280px' }}>
-                <div
-                  className="relative overflow-hidden"
-                  style={{ borderRadius: '12px', border: '1px solid var(--border)', background: 'var(--surface-2)', aspectRatio: '3/4' }}
-                >
-                  <Image
-                    src="/headshot.jpg"
-                    alt="Ilia Duda — Quantitative Finance Engineer"
-                    fill
-                    loading="lazy"
-                    className="object-cover object-top"
-                    style={{ mixBlendMode: 'multiply' }}
-                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="font-display font-bold text-6xl" style={{ color: 'var(--border-strong)' }}>ID</span>
-                  </div>
-                </div>
+                <PhotoWithFallback />
                 <div className="mt-4 p-4 rounded-xl" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
                   <div className="space-y-2">
                     {[
@@ -168,10 +152,8 @@ export default function AboutPage() {
             {education.certifications.map((cert, i) => (
               <AnimateIn key={cert.name} delay={i * 70}>
                 <div
-                  className="p-6 rounded-[10px] transition-colors duration-200"
-                  style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
-                  onMouseEnter={e => (e.currentTarget.style.borderColor = 'var(--blue-mid)')}
-                  onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border)')}
+                  className="p-6 rounded-[10px] transition-colors duration-200 border border-border hover:border-blue-mid"
+                  style={{ background: 'var(--surface)' }}
                 >
                   <div className="flex items-start gap-4 mb-4">
                     <div

@@ -1,14 +1,10 @@
-import type { Metadata } from 'next'
+'use client'
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
 import { projects } from '@/lib/data'
 import { PageHero } from '@/components/ui/PageHero'
 import { AnimateIn } from '@/components/ui/AnimateIn'
 
-export const metadata: Metadata = {
-  title: 'Projects — Ilia Duda',
-  description: 'Production systems, data analytics, and research: options trading infrastructure, AI SaaS, Yandex analytics, quantitative finance research, and more.',
-}
 
 function ProjectCard({ project, compact = false }: { project: typeof projects[0]; compact?: boolean }) {
   return (

@@ -1,13 +1,9 @@
-import type { Metadata } from 'next'
+'use client'
 import Link from 'next/link'
 import { experience } from '@/lib/data'
 import { PageHero } from '@/components/ui/PageHero'
 import { AnimateIn } from '@/components/ui/AnimateIn'
 
-export const metadata: Metadata = {
-  title: 'Experience — Ilia Duda',
-  description: 'Finance and engineering experience: State Street Global Advisors, Glacier Capital Systems, CloseBooks, BCS Bank, and more.',
-}
 
 export default function ExperiencePage() {
   return (

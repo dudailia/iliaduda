@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import { AnimateIn } from '@/components/ui/AnimateIn'
 import { SectionTag } from '@/components/ui/SectionTag'

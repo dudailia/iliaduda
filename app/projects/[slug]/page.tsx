@@ -128,10 +128,8 @@ export default async function ProjectDetailPage({ params }: Props) {
                         href={project.links.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 font-body w-full rounded-lg transition-all duration-200"
-                        style={{ color: 'var(--ink-2)', border: '1px solid var(--border)', background: 'var(--surface-2)', padding: '11px 20px', fontSize: '14px', borderRadius: '8px' }}
-                        onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--blue)'; e.currentTarget.style.color = 'var(--blue)' }}
-                        onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--ink-2)' }}
+                        className="flex items-center justify-center gap-2 font-body w-full rounded-lg transition-all duration-200 border border-border hover:border-blue hover:text-blue text-ink-2"
+                        style={{ background: 'var(--surface-2)', padding: '11px 20px', fontSize: '14px', borderRadius: '8px' }}
                       >
                         <ExternalLink size={14} /> View on GitHub
                       </a>
