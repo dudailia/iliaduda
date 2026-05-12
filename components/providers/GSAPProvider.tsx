@@ -1,29 +1,13 @@
 'use client'
-import { useEffect, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useLenis } from 'lenis/react'
 
 gsap.registerPlugin(ScrollTrigger)
 
-function LenisScrollTriggerSync() {
-  useLenis(() => {
-    ScrollTrigger.update()
-  })
-  return null
-}
-
+// GSAPProvider is now a thin wrapper — all GSAP/Lenis sync
+// happens inside SmoothScrollProvider via the shared GSAP ticker.
+// Keeping this component so layout.tsx doesn't need changes.
 export function GSAPProvider({ children }: { children: ReactNode }) {
-  useEffect(() => {
-    gsap.ticker.lagSmoothing(0)
-    const timeout = setTimeout(() => ScrollTrigger.refresh(), 500)
-    return () => clearTimeout(timeout)
-  }, [])
-
-  return (
-    <>
-      <LenisScrollTriggerSync />
-      {children}
-    </>
-  )
+  return <>{children}</>
 }

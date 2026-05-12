@@ -2,6 +2,9 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 
+// Lightweight page transition — only opacity, no y transform.
+// y transforms on the root element force full-page repaints and
+// destroy 120Hz smoothness. Opacity-only runs on the compositor thread.
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
 
@@ -9,10 +12,11 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
     <AnimatePresence mode="wait" initial={false}>
       <motion.div
         key={pathname}
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -8 }}
-        transition={{ duration: 0.22, ease: [0.21, 0.47, 0.32, 0.98] as const }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.18, ease: 'linear' }}
+        style={{ willChange: 'opacity' }}
       >
         {children}
       </motion.div>

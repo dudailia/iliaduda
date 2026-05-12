@@ -63,6 +63,22 @@ body {
 
 :focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
 
+/* Compositor hints — keep animations off the main thread */
+.lenis-wrapper, html.lenis, html.lenis body {
+  height: auto;
+}
+
+/* Force GPU layer on animated containers */
+[data-gsap], .gsap-animated {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Ensure smooth scrolling doesn't conflict with Lenis */
+html.lenis {
+  scroll-behavior: auto !important;
+}
+
 /* Project card shimmer */
 .shimmer-card {
   position: relative;

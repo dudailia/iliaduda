@@ -1,27 +1,53 @@
 'use client'
-import { useEffect, useState } from 'react'
-import { ReactLenis } from 'lenis/react'
-import { type ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
+import Lenis from 'lenis'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-export function SmoothScrollProvider({ children }: { children: ReactNode }) {
-  const [reducedMotion, setReducedMotion] = useState(false)
+gsap.registerPlugin(ScrollTrigger)
+
+interface Props {
+  children: ReactNode
+}
+
+export function SmoothScrollProvider({ children }: Props) {
+  const lenisRef = useRef<Lenis | null>(null)
 
   useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setReducedMotion(mq.matches)
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    const lenis = new Lenis({
+      lerp: prefersReduced ? 1 : 0.12,
+      duration: prefersReduced ? 0 : 1.0,
+      smoothWheel: true,
+      syncTouch: false,
+      // autoRaf: false so GSAP drives the loop
+      autoRaf: false,
+    })
+
+    lenisRef.current = lenis
+
+    // Sync ScrollTrigger with Lenis scroll position
+    lenis.on('scroll', ScrollTrigger.update)
+
+    // Drive Lenis from GSAP ticker — single RAF source, perfect sync at any Hz
+    function onTick(time: number) {
+      lenis.raf(time * 1000)
+    }
+
+    gsap.ticker.add(onTick)
+    gsap.ticker.lagSmoothing(0)
+
+    // Refresh ScrollTrigger after fonts/images settle
+    const timeout = setTimeout(() => ScrollTrigger.refresh(), 600)
+
+    return () => {
+      clearTimeout(timeout)
+      gsap.ticker.remove(onTick)
+      lenis.destroy()
+      lenisRef.current = null
+    }
   }, [])
 
-  return (
-    <ReactLenis
-      root
-      options={{
-        lerp: reducedMotion ? 1 : 0.08,
-        duration: reducedMotion ? 0 : 1.2,
-        syncTouch: false,
-        touchMultiplier: 2,
-      }}
-    >
-      {children}
-    </ReactLenis>
-  )
+  return <>{children}</>
 }
