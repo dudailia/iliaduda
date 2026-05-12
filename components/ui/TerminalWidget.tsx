@@ -1,104 +1,104 @@
 'use client'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 
-interface TerminalLine {
-  text: string
-  color: string
-  valueText?: string
-  valueColor?: string
-  pause?: number
+interface Line {
+  main: string
+  value: string
+  mainColor: string
+  valueColor: string
 }
 
-const SEQUENCE: TerminalLine[] = [
-  { text: '$ python3 analyze_portfolio.py', color: 'rgba(255,255,255,0.4)' },
-  { text: '', color: '', pause: 400 },
-  { text: 'Loading market data...', color: '#60A5FA' },
-  { text: '✓ 20 instruments scanned', color: '#34D399' },
-  { text: '✓ Volatility surface built', color: '#34D399' },
-  { text: '✓ Regime: Risk-On detected', color: '#34D399' },
-  { text: '', color: '', pause: 300 },
-  { text: 'Portfolio Alpha (vs SPX):  ', color: 'rgba(255,255,255,0.85)', valueText: '+5.3%', valueColor: '#34D399' },
-  { text: 'Sharpe Ratio:              ', color: 'rgba(255,255,255,0.85)', valueText: '1.84', valueColor: 'rgba(255,255,255,0.85)' },
-  { text: 'Max Drawdown:              ', color: 'rgba(255,255,255,0.85)', valueText: '-4.2%', valueColor: '#F87171' },
-  { text: '', color: '', pause: 500 },
+const STEPS = [
+  { type: 'line' as const, main: '$ python3 analyze_portfolio.py', value: '', mainColor: 'rgba(255,255,255,0.4)', valueColor: '' },
+  { type: 'pause' as const, ms: 400 },
+  { type: 'line' as const, main: 'Loading market data...', value: '', mainColor: '#60A5FA', valueColor: '' },
+  { type: 'line' as const, main: '✓ 20 instruments scanned', value: '', mainColor: '#34D399', valueColor: '' },
+  { type: 'line' as const, main: '✓ Volatility surface built', value: '', mainColor: '#34D399', valueColor: '' },
+  { type: 'line' as const, main: '✓ Regime: Risk-On detected', value: '', mainColor: '#34D399', valueColor: '' },
+  { type: 'pause' as const, ms: 300 },
+  { type: 'line' as const, main: 'Portfolio Alpha (vs SPX):  ', value: '+5.3%', mainColor: 'rgba(255,255,255,0.85)', valueColor: '#34D399' },
+  { type: 'line' as const, main: 'Sharpe Ratio:              ', value: '1.84', mainColor: 'rgba(255,255,255,0.85)', valueColor: 'rgba(255,255,255,0.85)' },
+  { type: 'line' as const, main: 'Max Drawdown:              ', value: '-4.2%', mainColor: 'rgba(255,255,255,0.85)', valueColor: '#F87171' },
+  { type: 'pause' as const, ms: 500 },
 ]
 
-const CHAR_DELAY = 35 // ms per character
+const CHAR_MS = 32
 
 export function TerminalWidget() {
-  const [lines, setLines] = useState<{ text: string; color: string; valueText?: string; valueColor?: string; done: boolean }[]>([])
-  const [cursorVisible, setCursorVisible] = useState(true)
-  const [typing, setTyping] = useState(true)
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [lines, setLines] = useState<Line[]>([])
+  const [cursor, setCursor] = useState(true)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const rafRef = useRef<number | null>(null)
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([])
 
-  const runSequence = () => {
+  const clearAllTimers = () => {
+    timersRef.current.forEach(clearTimeout)
+    timersRef.current = []
+    if (rafRef.current) cancelAnimationFrame(rafRef.current)
+  }
+
+  const schedule = (fn: () => void, ms: number) => {
+    const id = setTimeout(fn, ms)
+    timersRef.current.push(id)
+    return id
+  }
+
+  const runSequence = useCallback(() => {
+    clearAllTimers()
     setLines([])
-    setTyping(true)
 
-    let totalDelay = 0
+    let delay = 0
+    let lineIndex = 0
 
-    SEQUENCE.forEach((line, lineIdx) => {
-      if (line.pause) {
-        totalDelay += line.pause
+    STEPS.forEach(step => {
+      if (step.type === 'pause') {
+        delay += step.ms
         return
       }
 
-      if (line.text === '') {
-        totalDelay += 100
-        return
-      }
+      const { main, value, mainColor, valueColor } = step
+      const capturedLineIndex = lineIndex
+      lineIndex++
 
-      const lineStartDelay = totalDelay
-      const chars = line.text.split('')
-
-      chars.forEach((_, charIdx) => {
-        const charDelay = lineStartDelay + charIdx * CHAR_DELAY
-        timeoutRef.current = setTimeout(() => {
+      // Type main text char by char
+      for (let i = 0; i <= main.length; i++) {
+        const charDelay = delay + i * CHAR_MS
+        const slice = main.slice(0, i)
+        schedule(() => {
           setLines(prev => {
-            const updated = [...prev]
-            const existing = updated.find(l => l.text.startsWith(line.text.slice(0, charIdx + 1) === line.text.slice(0, charIdx + 1) ? line.text.slice(0, charIdx) : ''))
-            // Build lines array: find or create this line entry
-            const lineEntry = updated[lineIdx] || { text: '', color: line.color, valueText: line.valueText, valueColor: line.valueColor, done: false }
-            lineEntry.text = line.text.slice(0, charIdx + 1)
-            lineEntry.done = charIdx === chars.length - 1
-            updated[lineIdx] = lineEntry
-            return [...updated]
+            const next = [...prev]
+            next[capturedLineIndex] = { main: slice, value: '', mainColor, valueColor }
+            return next
           })
         }, charDelay)
-      })
+      }
 
-      // Add value text after main text
-      if (line.valueText) {
-        const valueDelay = lineStartDelay + chars.length * CHAR_DELAY + 50
-        line.valueText.split('').forEach((_, vIdx) => {
-          const vCharDelay = valueDelay + vIdx * CHAR_DELAY
-          timeoutRef.current = setTimeout(() => {
+      const mainDone = delay + main.length * CHAR_MS + 40
+
+      // Type value text char by char (if any)
+      if (value) {
+        for (let i = 0; i <= value.length; i++) {
+          const charDelay = mainDone + i * CHAR_MS
+          const slice = value.slice(0, i)
+          schedule(() => {
             setLines(prev => {
-              const updated = [...prev]
-              if (updated[lineIdx]) {
-                updated[lineIdx] = {
-                  ...updated[lineIdx],
-                  valueText: (line.valueText || '').slice(0, vIdx + 1),
-                }
+              const next = [...prev]
+              if (next[capturedLineIndex]) {
+                next[capturedLineIndex] = { ...next[capturedLineIndex], value: slice }
               }
-              return [...updated]
+              return next
             })
-          }, vCharDelay)
-        })
-        totalDelay = lineStartDelay + chars.length * CHAR_DELAY + (line.valueText.length * CHAR_DELAY) + 100
+          }, charDelay)
+        }
+        delay = mainDone + value.length * CHAR_MS + 60
       } else {
-        totalDelay = lineStartDelay + chars.length * CHAR_DELAY + 80
+        delay = mainDone + 60
       }
     })
 
-    // After sequence done, wait 3s then restart
-    const restartDelay = totalDelay + 3000
-    timeoutRef.current = setTimeout(() => {
-      runSequence()
-    }, restartDelay)
-  }
-
-  const containerRef = useRef<HTMLDivElement>(null)
+    // Loop after 3s pause
+    schedule(() => runSequence(), delay + 3000)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const el = containerRef.current
@@ -110,17 +110,22 @@ export function TerminalWidget() {
           runSequence()
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     )
     observer.observe(el)
-    return () => observer.disconnect()
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    return () => {
+      observer.disconnect()
+      clearAllTimers()
+    }
+  }, [runSequence])
 
   // Blinking cursor
   useEffect(() => {
-    const id = setInterval(() => setCursorVisible(v => !v), 530)
+    const id = setInterval(() => setCursor(v => !v), 530)
     return () => clearInterval(id)
   }, [])
+
+  const displaySteps = STEPS.filter(s => s.type === 'line') as typeof STEPS & { type: 'line' }[]
 
   return (
     <div
@@ -133,51 +138,48 @@ export function TerminalWidget() {
         maxWidth: '460px',
       }}
     >
-      {/* Header */}
+      {/* Title bar */}
       <div
-        className="flex items-center h-9 px-4"
-        style={{
-          background: 'rgba(255,255,255,0.04)',
-          borderBottom: '1px solid rgba(255,255,255,0.06)',
-        }}
+        className="relative flex items-center justify-center h-9 px-4"
+        style={{ background: 'rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}
       >
-        <div className="flex gap-1.5 mr-auto">
+        <div className="absolute left-4 flex gap-1.5">
           <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#FF5F57' }} />
           <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#FFBD2E' }} />
           <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#28CA41' }} />
         </div>
-        <span className="font-mono text-[11px] absolute left-1/2 -translate-x-1/2" style={{ color: 'rgba(255,255,255,0.3)' }}>
+        <span className="font-mono text-[11px]" style={{ color: 'rgba(255,255,255,0.3)' }}>
           ilia@portfolio ~ %
         </span>
       </div>
 
-      {/* Content */}
+      {/* Output */}
       <div className="p-5" style={{ minHeight: '240px' }}>
-        <div className="font-mono leading-[1.7] space-y-0" style={{ fontSize: 'clamp(10px, 1.5vw, 12px)' }}>
-          {SEQUENCE.map((seqLine, i) => {
-            if (seqLine.text === '' || seqLine.pause) {
-              return <div key={i} className="h-3" />
-            }
-            const renderedLine = lines[i]
-            if (!renderedLine) return null
+        <div className="font-mono leading-[1.7]" style={{ fontSize: 'clamp(10px, 1.5vw, 12px)' }}>
+          {STEPS.map((step, i) => {
+            if (step.type === 'pause') return <div key={i} className="h-3" />
+            const lineIdx = STEPS.slice(0, i).filter(s => s.type === 'line').length
+            const rendered = lines[lineIdx]
+            if (!rendered) return null
             return (
-              <div key={i} className="flex flex-wrap">
-                <span style={{ color: seqLine.color }}>{renderedLine.text}</span>
-                {seqLine.valueText && renderedLine.valueText && (
-                  <span style={{ color: seqLine.valueColor }}>{renderedLine.valueText}</span>
+              <div key={i} className="flex">
+                <span style={{ color: step.mainColor }}>{rendered.main}</span>
+                {rendered.value && (
+                  <span style={{ color: step.valueColor }}>{rendered.value}</span>
                 )}
               </div>
             )
           })}
-          {/* Cursor line */}
+
+          {/* Cursor */}
           <div className="flex items-center" style={{ color: 'rgba(255,255,255,0.4)' }}>
             <span>$ </span>
             <span
               className="inline-block w-[7px] h-[14px] ml-0.5"
               style={{
                 background: 'rgba(255,255,255,0.7)',
-                opacity: cursorVisible ? 1 : 0,
-                transition: 'opacity 0.1s',
+                opacity: cursor ? 1 : 0,
+                transition: 'opacity 0.08s',
               }}
             />
           </div>
