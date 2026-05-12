@@ -55,11 +55,11 @@ export default async function ProjectDetailPage({ params }: Props) {
       {/* Metrics */}
       <div className="py-8 px-5 md:px-6" style={{ borderBottom: '1px solid var(--border)' }}>
         <div className="mx-auto" style={{ maxWidth: '1140px' }}>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-3">
             {project.metrics.map((m, i) => (
               <AnimateIn key={m.label} delay={i * 60}>
                 <div className="p-4 md:p-5 rounded-lg text-center" style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
-                  <div className="font-display font-bold text-navy" style={{ fontSize: 'clamp(16px, 3vw, 26px)', lineHeight: 1.2 }}>{m.value}</div>
+                  <div className="font-display font-bold text-navy" style={{ fontSize: 'clamp(13px, 4vw, 26px)', lineHeight: 1.2 }}>{m.value}</div>
                   <div className="font-body text-ink-3 mt-1" style={{ fontSize: '12px' }}>{m.label}</div>
                 </div>
               </AnimateIn>
@@ -69,7 +69,7 @@ export default async function ProjectDetailPage({ params }: Props) {
       </div>
 
       {/* What I built */}
-      <div className="py-16 px-5 md:px-6">
+      <div className="py-12 md:py-16 px-5 md:px-6">
         <div className="mx-auto" style={{ maxWidth: '1140px' }}>
           <div className="grid grid-cols-1 lg:grid-cols-[65%_35%] gap-12">
 

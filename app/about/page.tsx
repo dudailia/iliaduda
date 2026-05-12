@@ -8,7 +8,7 @@ import { education, personal } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'About — Ilia Duda',
-  description: 'Mathematics & Business student at Northeastern University. Quantitative finance, AI engineering, and entrepreneurship.',
+  description: 'Mathematics & Business student at Northeastern. Skills in Python, quantitative finance, AI engineering, and full-stack development.',
 }
 
 const BIO = [

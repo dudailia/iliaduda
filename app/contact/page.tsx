@@ -6,7 +6,7 @@ import { ContactClient } from '@/components/contact/ContactClient'
 
 export const metadata: Metadata = {
   title: 'Contact — Ilia Duda',
-  description: 'Get in touch with Ilia Duda. Available for investment management co-ops and quantitative finance roles from July 2026.',
+  description: 'Get in touch with Ilia Duda. Open to co-op roles in investment management and quantitative finance for July 2026.',
 }
 
 export default function ContactPage() {
