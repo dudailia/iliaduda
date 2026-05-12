@@ -52,7 +52,7 @@ export function ExperiencePreview() {
                     <span className="font-mono text-ink-3" style={{ fontSize: '12px', flexShrink: 0 }}>{exp.period}</span>
                   </div>
                   <p className="font-body italic mb-2" style={{ fontSize: '13px', color: 'var(--blue)' }}>{exp.role}</p>
-                  <p className="font-body text-ink-2 mb-3" style={{ fontSize: '14px', lineHeight: 1.6, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{exp.summary}</p>
+                  <p className="font-body text-ink-2 mb-3" style={{ fontSize: '14px', lineHeight: 1.65, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{exp.summary}</p>
                   <span className="font-body group-hover:underline" style={{ fontSize: '13px', color: 'var(--blue)' }}>View details →</span>
                 </div>
               </Link>

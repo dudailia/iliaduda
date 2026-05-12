@@ -24,7 +24,7 @@ export function PageHero({ tag, title, subtitle, titleSize = '56px', centered = 
           {subtitle && (
             <p
               className={`font-body text-ink-2 ${centered ? 'mx-auto' : ''}`}
-              style={{ fontSize: 'clamp(16px, 2vw, 18px)', lineHeight: 1.6, maxWidth: '580px' }}
+              style={{ fontSize: 'clamp(16px, 2vw, 18px)', lineHeight: 1.65, maxWidth: '580px' }}
             >
               {subtitle}
             </p>

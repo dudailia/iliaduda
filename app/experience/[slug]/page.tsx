@@ -103,7 +103,7 @@ export default async function ExperienceDetailPage({ params }: Props) {
                     ].map(item => (
                       <div key={item.key} className="flex justify-between items-start gap-4">
                         <span className="font-mono text-ink-3 uppercase" style={{ fontSize: '10px', letterSpacing: '0.05em', flexShrink: 0 }}>{item.key}</span>
-                        <span className="font-body text-ink-2 text-right" style={{ fontSize: '13px' }}>{item.value}</span>
+                        <span className="font-body text-ink-2 text-right" style={{ fontSize: '13px', lineHeight: 1.4 }}>{item.value}</span>
                       </div>
                     ))}
                   </div>
