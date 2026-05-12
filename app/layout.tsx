@@ -5,6 +5,8 @@ import { ScrollProgress } from '@/components/ui/ScrollProgress'
 import { Nav } from '@/components/layout/Nav'
 import { Footer } from '@/components/layout/Footer'
 import { LayoutWrapper } from '@/components/layout/LayoutWrapper'
+import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider'
+import { GSAPProvider } from '@/components/providers/GSAPProvider'
 
 const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
@@ -54,12 +56,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${bricolage.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
       <body className="font-body bg-background text-ink">
-        <ScrollProgress />
-        <Nav />
-        <LayoutWrapper>
-          {children}
-        </LayoutWrapper>
-        <Footer />
+        <SmoothScrollProvider>
+          <GSAPProvider>
+            <ScrollProgress />
+            <Nav />
+            <LayoutWrapper>
+              {children}
+            </LayoutWrapper>
+            <Footer />
+          </GSAPProvider>
+        </SmoothScrollProvider>
       </body>
     </html>
   )

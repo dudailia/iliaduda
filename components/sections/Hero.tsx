@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Download, ChevronDown } from 'lucide-react'
+import Link from 'next/link'
 import { MagneticButton } from '@/components/ui/MagneticButton'
 import { CountUp } from '@/components/ui/CountUp'
 import { TerminalWidget } from '@/components/ui/TerminalWidget'
@@ -186,8 +187,8 @@ export function Hero() {
               </MagneticButton>
 
               <MagneticButton>
-                <a
-                  href="#contact"
+                <Link
+                  href="/contact"
                   className="inline-flex items-center justify-center font-body rounded-[7px] transition-all duration-[180ms] w-full sm:w-auto"
                   style={{
                     background: 'transparent',
@@ -210,7 +211,7 @@ export function Hero() {
                   }}
                 >
                   Get in Touch
-                </a>
+                </Link>
               </MagneticButton>
             </motion.div>
 
