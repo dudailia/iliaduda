@@ -20,26 +20,24 @@ export function ValueProp() {
       const el = sectionRef.current
       if (!el) return
 
-      // Animate counter numbers with snap for integer display
+      // Animate counter numbers
       counterRefs.current.forEach((counter, i) => {
         if (!counter) return
         const target = i + 1
-
-        gsap.fromTo(
-          { count: 0 },
-          { count: target, duration: 1.2, ease: 'power2.out' },
-          {
-            onUpdate(tween) {
-              const val = Math.round(tween.targets()[0].count)
-              counter.textContent = String(val).padStart(2, '0')
-            },
-            scrollTrigger: {
-              trigger: el,
-              start: 'top 75%',
-              once: true,
-            },
-          }
-        )
+        const obj = { value: 0 }
+        gsap.to(obj, {
+          value: target,
+          duration: 1.2,
+          ease: 'power2.out',
+          onUpdate: () => {
+            if (counter) counter.textContent = String(Math.round(obj.value)).padStart(2, '0')
+          },
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 75%',
+            once: true,
+          },
+        })
       })
 
       // Fade and slide in items with stagger
