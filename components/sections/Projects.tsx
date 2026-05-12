@@ -65,19 +65,19 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
       >
         {project.title}
       </h3>
-      <p className="font-body text-ink-3 mb-3" style={{ fontSize: '13px' }}>{project.company}</p>
+      <p className="font-body text-ink-3 mb-3" style={{ fontSize: '13px' }}>{project.subtitle}</p>
       <p className="font-body text-ink-2 flex-1 mb-4" style={{ fontSize: '14px', lineHeight: 1.6 }}>{project.description}</p>
 
       {/* Metrics */}
       <div className="flex flex-wrap gap-2 mb-4">
         {project.metrics.map(m => (
-          <span key={m} className="font-mono" style={{ fontSize: '11px', color: 'var(--blue)', background: 'var(--blue-light)', border: '1px solid var(--blue-mid)', borderRadius: '4px', padding: '3px 8px' }}>{m}</span>
+          <span key={m.label} className="font-mono" style={{ fontSize: '11px', color: 'var(--blue)', background: 'var(--blue-light)', border: '1px solid var(--blue-mid)', borderRadius: '4px', padding: '3px 8px' }}>{m.value}</span>
         ))}
       </div>
 
       {/* Tech */}
       <div className="flex flex-wrap gap-1.5 mb-4">
-        {project.tech.map(t => (
+        {Object.values(project.tech).flat().map(t => (
           <span key={t} className="font-mono" style={{ fontSize: '11px', color: 'var(--ink-3)', background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: '4px', padding: '3px 8px' }}>{t}</span>
         ))}
       </div>
@@ -117,7 +117,7 @@ export function Projects() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {projects.map((project, i) => (
-            <AnimateIn key={project.id} delay={i * 80}>
+            <AnimateIn key={project.slug} delay={i * 80}>
               <ProjectCard project={project} />
             </AnimateIn>
           ))}

@@ -30,14 +30,14 @@ export function Education() {
                 NU
               </div>
 
-              <h3 className="font-display font-bold text-navy mb-1" style={{ fontSize: '22px' }}>{education.university}</h3>
-              <p className="font-body text-ink-2 mb-1" style={{ fontSize: '15px' }}>{education.degree}</p>
-              <p className="font-body text-ink-3 mb-1" style={{ fontSize: '13px' }}>{education.college}</p>
-              <p className="font-mono text-ink-3 mb-6" style={{ fontSize: '12px' }}>{education.period} · {education.location}</p>
+              <h3 className="font-display font-bold text-navy mb-1" style={{ fontSize: '22px' }}>{education.university.name}</h3>
+              <p className="font-body text-ink-2 mb-1" style={{ fontSize: '15px' }}>{education.university.degree}</p>
+              <p className="font-body text-ink-3 mb-1" style={{ fontSize: '13px' }}>{education.university.college}</p>
+              <p className="font-mono text-ink-3 mb-6" style={{ fontSize: '12px' }}>{education.university.period} · {education.university.location}</p>
 
               <p className="font-mono uppercase mb-3" style={{ fontSize: '11px', color: 'var(--blue)', letterSpacing: '0.08em' }}>Relevant Coursework</p>
               <div className="flex flex-wrap gap-2">
-                {education.courses.map(c => (
+                {education.university.courses.map(c => (
                   <span key={c} className="font-mono" style={{ fontSize: '11px', color: 'var(--ink-3)', background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: '4px', padding: '3px 8px' }}>
                     {c}
                   </span>
