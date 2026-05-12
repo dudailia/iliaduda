@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { experience } from '@/lib/data'
 import { BackButton } from '@/components/ui/BackButton'
 import { AnimateIn } from '@/components/ui/AnimateIn'
+import { ExperienceBullets } from '@/components/experience/ExperienceBullets'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -86,15 +87,7 @@ export default async function ExperienceDetailPage({ params }: Props) {
             {/* Bullets */}
             <div>
               <h2 className="font-display font-bold text-navy mb-6" style={{ fontSize: '24px' }}>What I did</h2>
-              <div className="space-y-4">
-                {exp.bullets.map((bullet, i) => (
-                  <AnimateIn key={i} delay={i * 60}>
-                    <div className="p-4" style={{ background: 'var(--surface)', borderLeft: `3px solid ${exp.accentColor}`, border: '1px solid var(--border)', borderRadius: '0 8px 8px 0' }}>
-                      <p className="font-body text-ink-2" style={{ fontSize: '15px', lineHeight: 1.65 }}>{bullet}</p>
-                    </div>
-                  </AnimateIn>
-                ))}
-              </div>
+              <ExperienceBullets bullets={exp.bullets} accentColor={exp.accentColor} />
             </div>
 
             {/* Sidebar */}
