@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 import { Bricolage_Grotesque, DM_Sans, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { ScrollProgress } from '@/components/ui/ScrollProgress'
+import { Nav } from '@/components/layout/Nav'
+import { Footer } from '@/components/layout/Footer'
+import { LayoutWrapper } from '@/components/layout/LayoutWrapper'
 
 const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
@@ -52,7 +55,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${bricolage.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
       <body className="font-body bg-background text-ink">
         <ScrollProgress />
-        {children}
+        <Nav />
+        <LayoutWrapper>
+          {children}
+        </LayoutWrapper>
+        <Footer />
       </body>
     </html>
   )

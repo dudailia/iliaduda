@@ -158,7 +158,11 @@ export default function AboutPage() {
                   <div className="flex items-start gap-4 mb-4">
                     <div
                       className="w-10 h-10 rounded-lg flex items-center justify-center font-display font-bold shrink-0"
-                      style={{ background: cert.monogramColor + '15', color: cert.monogramColor, fontSize: '13px' }}
+                      style={{
+                        background: cert.monogramColor,
+                        color: cert.monogramColor === '#0A0A0A' || cert.monogramColor === '#000000' || cert.monogramColor === '#006699' || cert.monogramColor === '#006A4E' || cert.monogramColor === '#0F62FE' || cert.monogramColor === '#00A651' ? '#ffffff' : '#000000',
+                        fontSize: '13px',
+                      }}
                     >
                       {cert.monogram}
                     </div>
