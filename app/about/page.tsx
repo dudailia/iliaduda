@@ -69,7 +69,6 @@ export default function AboutPage() {
                   className="object-cover object-top w-full h-full"
                   style={{ mixBlendMode: 'multiply' }}
                   priority
-                  onError={() => {}}
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="font-display font-bold text-5xl" style={{ color: 'var(--border-strong)' }}>ID</span>
