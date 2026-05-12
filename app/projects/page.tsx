@@ -1,152 +1,110 @@
-'use client'
-import { useEffect, useRef } from 'react'
+import type { Metadata } from 'next'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight } from 'lucide-react'
-import { PageHero } from '@/components/ui/PageHero'
+import { motion } from 'framer-motion'
+import { ArrowRight, ExternalLink } from 'lucide-react'
 import { projects } from '@/lib/data'
 
-gsap.registerPlugin(ScrollTrigger)
-
-const MiniAreaChart = dynamic(() => import('@/components/projects/MiniAreaChart'), { ssr: false, loading: () => <div style={{ height: '100%' }} /> })
-const MiniDonut = dynamic(() => import('@/components/projects/MiniDonut'), { ssr: false, loading: () => <div style={{ height: '100%' }} /> })
-
-const MINI_CHARTS: Record<string, React.ComponentType | null> = {
-  'glacier-trading-engine': MiniAreaChart,
-  'closebooks-saas': null,
-  'yandex-analytics': MiniDonut,
-}
-
-const MINI_BG: Record<string, string> = {
-  'glacier-trading-engine': 'var(--navy)',
-  'closebooks-saas': '#0F172A',
-  'yandex-analytics': '#0F172A',
-}
-
-function StatusBadge({ status, color }: { status: string; color: 'green' | 'blue' }) {
-  return (
-    <span className="font-mono" style={{ fontSize: '11px', borderRadius: '4px', padding: '3px 8px', background: color === 'green' ? '#F0FDF4' : 'var(--blue-light)', border: `1px solid ${color === 'green' ? '#BBF7D0' : 'var(--blue-mid)'}`, color: color === 'green' ? '#16A34A' : 'var(--blue)' }}>
-      {status}
-    </span>
-  )
+export const metadata: Metadata = {
+  title: 'Projects — Ilia Duda',
+  description: 'Options trading infrastructure, CloseBooks AI SaaS, Yandex Afisha analytics, quantitative finance research.',
 }
 
 export default function ProjectsPage() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const featured = projects.filter(p => p.featured)
-  const others = projects.filter(p => !p.featured)
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.proj-card', { opacity: 0, y: 28 }, {
-        opacity: 1, y: 0, stagger: 0.12, duration: 0.65, ease: 'power3.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
-      })
-    })
-    return () => ctx.revert()
-  }, [])
-
   return (
-    <main style={{ background: 'var(--background)', minHeight: '100vh' }}>
-      <PageHero
-        tag="PROJECTS"
-        title="Things I've built."
-        subtitle="Production systems, analytics pipelines, academic research — built to work, not to demo."
-      />
+    <main style={{ background: 'var(--bg)' }}>
+      {/* Header */}
+      <div className="px-5 md:px-10 pt-16 pb-10" style={{ borderBottom: '1px solid var(--border)' }}>
+        <div className="mx-auto" style={{ maxWidth: '1100px' }}>
+          <p className="font-mono text-[11px] uppercase tracking-[0.08em] mb-3" style={{ color: 'var(--blue)' }}>Projects</p>
+          <h1 className="font-display font-[800] mb-4" style={{ fontSize: 'clamp(36px, 5vw, 56px)', color: 'var(--navy)', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
+            Things I&apos;ve built.
+          </h1>
+          <p className="font-body" style={{ fontSize: '18px', color: 'var(--text-2)', maxWidth: '560px', lineHeight: 1.6 }}>
+            Production systems, analytics pipelines, academic research — built to work, not to demo.
+          </p>
+        </div>
+      </div>
 
-      <div ref={sectionRef} className="pb-24 px-5 md:px-10">
-        <div className="mx-auto space-y-5" style={{ maxWidth: '1140px' }}>
-
-          {/* Featured large cards */}
-          {featured.map(project => {
-            const MiniChart = MINI_CHARTS[project.slug] ?? null
-            const miniBg = MINI_BG[project.slug] ?? '#0F172A'
+      {/* Cards */}
+      <div className="px-5 md:px-10 py-16">
+        <div className="mx-auto space-y-6" style={{ maxWidth: '1100px' }}>
+          {projects.map((p, i) => {
+            const isFeatured = i < 3
             return (
-              <div
-                key={project.slug}
-                className="proj-card rounded-2xl transition-shadow duration-200 hover:shadow-lg"
-                style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '16px', padding: '40px 44px' }}
+              <motion.div
+                key={p.slug}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
               >
-                <div className="grid grid-cols-1 lg:grid-cols-[58%_42%] gap-10 items-center">
-                  {/* Left */}
-                  <div className="flex flex-col gap-4">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-mono uppercase" style={{ fontSize: '10px', color: 'var(--ink-3)', background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: '4px', padding: '3px 8px' }}>{project.type}</span>
-                      <StatusBadge status={project.status} color={project.statusColor} />
-                    </div>
+                <div
+                  className="rounded-2xl transition-all duration-200 group"
+                  style={{
+                    background: 'var(--surface)',
+                    border: '1px solid var(--border)',
+                    borderLeft: `4px solid ${p.accentColor}`,
+                    padding: isFeatured ? '40px 44px' : '28px 32px',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(14,17,23,0.08)' }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '' }}
+                >
+                  <div className={`grid grid-cols-1 ${isFeatured ? 'lg:grid-cols-[55%_45%]' : ''} gap-8 items-center`}>
+                    {/* Content */}
                     <div>
-                      <h2 className="font-display font-extrabold text-navy" style={{ fontSize: '28px', lineHeight: 1.15, letterSpacing: '-0.02em' }}>{project.title}</h2>
-                      <p className="font-body italic text-ink-3 mt-1" style={{ fontSize: '14px' }}>{project.subtitle}</p>
-                    </div>
-                    <p className="font-body text-ink-2" style={{ fontSize: '16px', lineHeight: 1.7, display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{project.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.metrics.map(m => (
-                        <span key={m.label} className="font-mono" style={{ fontSize: '12px', color: 'var(--blue)', background: 'var(--blue-light)', border: '1px solid var(--blue-mid)', borderRadius: '4px', padding: '4px 10px' }}>
-                          {m.value} {m.label}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {Object.values(project.tech).flat().slice(0, 6).map(t => (
-                        <span key={t} className="font-mono" style={{ fontSize: '11px', color: 'var(--ink-3)', background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: '4px', padding: '3px 8px' }}>{t}</span>
-                      ))}
-                    </div>
-                    <Link href={`/projects/${project.slug}`} className="flex items-center gap-1.5 font-body font-medium text-blue hover:underline" style={{ fontSize: '14px', width: 'fit-content' }}>
-                      View full case study <ArrowRight size={14} />
-                    </Link>
-                  </div>
+                      <div className="flex items-center gap-2 flex-wrap mb-4">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.06em] rounded px-2.5 py-1" style={{ color: 'var(--text-3)', background: 'var(--surface-hover)', border: '1px solid var(--border)' }}>{p.type}</span>
+                        <span className="font-mono text-[11px] rounded px-2.5 py-1" style={{
+                          color: p.statusColor === 'green' ? '#16A34A' : 'var(--blue)',
+                          background: p.statusColor === 'green' ? '#F0FDF4' : 'var(--blue-bg)',
+                          border: `1px solid ${p.statusColor === 'green' ? '#BBF7D0' : 'var(--blue-border)'}`,
+                        }}>{p.status}</span>
+                      </div>
 
-                  {/* Right mini chart */}
-                  <div className="rounded-xl p-5 flex items-center justify-center" style={{ background: miniBg, height: '220px' }}>
-                    {MiniChart ? <MiniChart /> : (
-                      <div className="text-center">
-                        <p className="font-mono text-white/30 uppercase" style={{ fontSize: '10px', letterSpacing: '0.06em' }}>CASE STUDY</p>
-                        <p className="font-display font-bold text-white mt-2" style={{ fontSize: '20px' }}>{project.title.split(' — ')[0]}</p>
+                      <h2 className="font-display font-[800] mb-1" style={{ fontSize: isFeatured ? '30px' : '22px', color: 'var(--navy)', letterSpacing: '-0.02em' }}>{p.title}</h2>
+                      <p className="font-body italic mb-4 text-[14px]" style={{ color: 'var(--text-3)' }}>{p.company}</p>
+                      <p className="font-body mb-5" style={{ fontSize: '16px', color: 'var(--text-2)', lineHeight: 1.7, display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{p.description}</p>
+
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {p.metrics.map(m => (
+                          <span key={m.l} className="font-mono text-[12px] rounded px-3 py-1" style={{ color: 'var(--blue)', background: 'var(--blue-bg)', border: '1px solid var(--blue-border)' }}>
+                            {m.v} {m.l}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex flex-wrap gap-1.5 mb-5">
+                        {p.tech.slice(0, 6).map(t => (
+                          <span key={t} className="font-mono text-[11px] rounded px-2 py-0.5" style={{ color: 'var(--text-3)', background: 'var(--surface-hover)', border: '1px solid var(--border)' }}>{t}</span>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center gap-4">
+                        <Link href={`/projects/${p.slug}`} className="flex items-center gap-1.5 font-body font-[500] text-[14px] transition-colors duration-150" style={{ color: 'var(--blue)' }}>
+                          View full case study <ArrowRight size={14} />
+                        </Link>
+                        {p.liveUrl && (
+                          <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 font-body text-[13px] transition-colors duration-150" style={{ color: 'var(--text-3)' }} onMouseEnter={e => (e.currentTarget.style.color = 'var(--blue)')} onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-3)')}>
+                            <ExternalLink size={13} /> Live
+                          </a>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Visual preview (featured only) */}
+                    {isFeatured && (
+                      <div className="hidden lg:flex items-center justify-center rounded-xl" style={{ background: '#0F172A', height: '200px', opacity: 0.9 }}>
+                        <div className="text-center">
+                          <div className="font-mono text-[11px] uppercase tracking-widest mb-2" style={{ color: 'rgba(255,255,255,0.3)' }}>{p.type}</div>
+                          <div className="font-display font-[700] text-white" style={{ fontSize: '22px', letterSpacing: '-0.02em' }}>{p.index}</div>
+                        </div>
                       </div>
                     )}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )
           })}
-
-          {/* Separator */}
-          <div className="flex items-center gap-4 py-4">
-            <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
-            <span className="font-mono text-ink-3 uppercase" style={{ fontSize: '11px', letterSpacing: '0.06em' }}>More work</span>
-            <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
-          </div>
-
-          {/* Smaller cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {others.map(project => (
-              <div
-                key={project.slug}
-                className="proj-card rounded-xl"
-                style={{ background: 'var(--surface)', border: '1px solid var(--border)', padding: '28px' }}
-              >
-                <div className="flex items-start justify-between gap-2 mb-3">
-                  <span className="font-mono uppercase" style={{ fontSize: '10px', color: 'var(--ink-3)', background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: '4px', padding: '3px 8px' }}>{project.type}</span>
-                  <StatusBadge status={project.status} color={project.statusColor} />
-                </div>
-                <h2 className="font-display font-bold text-navy mb-1" style={{ fontSize: '18px' }}>{project.title}</h2>
-                <p className="font-body italic text-ink-3 mb-3" style={{ fontSize: '13px' }}>{project.subtitle}</p>
-                <p className="font-body text-ink-2 mb-4" style={{ fontSize: '14px', lineHeight: 1.65, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{project.description}</p>
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.metrics.map(m => (
-                    <span key={m.label} className="font-mono" style={{ fontSize: '11px', color: 'var(--blue)', background: 'var(--blue-light)', border: '1px solid var(--blue-mid)', borderRadius: '4px', padding: '3px 8px' }}>
-                      {m.value} {m.label}
-                    </span>
-                  ))}
-                </div>
-                <Link href={`/projects/${project.slug}`} className="flex items-center gap-1 font-body text-blue hover:underline" style={{ fontSize: '13px', width: 'fit-content' }}>
-                  View case study <ArrowRight size={12} />
-                </Link>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </main>
