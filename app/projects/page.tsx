@@ -1,13 +1,9 @@
-import type { Metadata } from 'next'
+'use client'
+
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowRight, ExternalLink } from 'lucide-react'
 import { projects } from '@/lib/data'
-
-export const metadata: Metadata = {
-  title: 'Projects — Ilia Duda',
-  description: 'Options trading infrastructure, CloseBooks AI SaaS, Yandex Afisha analytics, quantitative finance research.',
-}
 
 export default function ProjectsPage() {
   return (

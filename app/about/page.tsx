@@ -1,13 +1,9 @@
-import type { Metadata } from 'next'
+'use client'
+
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { education, skills } from '@/lib/data'
 import { SkillsMatrix } from '@/components/SkillsMatrix'
-
-export const metadata: Metadata = {
-  title: 'About — Ilia Duda',
-  description: 'Mathematics & Business student at Northeastern. Skills in Python, quantitative finance, AI engineering, and full-stack development.',
-}
 
 const BIO = [
   "I'm a second-year Mathematics and Business Administration student at Northeastern University, targeting roles at the intersection of quantitative finance and AI. I think carefully about markets and build the tools to act on that thinking — not as separate disciplines, but as one integrated practice.",
