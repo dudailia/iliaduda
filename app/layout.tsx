@@ -1,71 +1,30 @@
 import type { Metadata } from 'next'
 import { Bricolage_Grotesque, DM_Sans, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-import { ScrollProgress } from '@/components/ui/ScrollProgress'
-import { Nav } from '@/components/layout/Nav'
-import { Footer } from '@/components/layout/Footer'
-import { LayoutWrapper } from '@/components/layout/LayoutWrapper'
-import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider'
-import { GSAPProvider } from '@/components/providers/GSAPProvider'
+import { Nav } from '@/components/Nav'
+import { Footer } from '@/components/Footer'
+import { SmoothScroll } from '@/components/SmoothScroll'
 
-const bricolage = Bricolage_Grotesque({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-bricolage',
-  display: 'swap',
-})
-
-const dmSans = DM_Sans({
-  subsets: ['latin'],
-  weight: ['300', '400', '500'],
-  variable: '--font-dm-sans',
-  display: 'swap',
-})
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-jetbrains',
-  display: 'swap',
-})
+const bricolage = Bricolage_Grotesque({ subsets: ['latin'], variable: '--font-bricolage', weight: ['400','500','600','700','800'], display: 'swap' })
+const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans', weight: ['300','400','500'], display: 'swap' })
+const jetbrains = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jetbrains', weight: ['400','500'], display: 'swap' })
 
 export const metadata: Metadata = {
   title: 'Ilia Duda — Quantitative Finance & AI Engineering',
-  description:
-    'Mathematics & Business student at Northeastern University. Options trading infrastructure engineer at Glacier Capital. Founder of CloseBooks AI. Incoming co-op at State Street Global Advisors. Targeting investment management and quant finance roles.',
-  keywords: ['Ilia Duda', 'quantitative finance', 'AI', 'Northeastern University', 'Boston', 'investment management', 'options trading'],
+  description: 'Mathematics & Business student at Northeastern University. Building at the intersection of financial markets and machine intelligence.',
   metadataBase: new URL('https://iliaduda.com'),
-  openGraph: {
-    title: 'Ilia Duda',
-    description: 'Building at the intersection of financial markets and machine intelligence.',
-    url: 'https://iliaduda.com',
-    type: 'website',
-  },
-  robots: { index: true, follow: true },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Ilia Duda — Quantitative Finance & AI Engineering',
-    description: 'Building at the intersection of financial markets and machine intelligence.',
-  },
-  alternates: {
-    canonical: 'https://iliaduda.com',
-  },
+  openGraph: { title: 'Ilia Duda', description: 'Quantitative Finance & AI Engineering', url: 'https://iliaduda.com', type: 'website' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
-      <body className="font-body bg-background text-ink">
-        <SmoothScrollProvider>
-          <GSAPProvider>
-            <ScrollProgress />
-            <Nav />
-            <LayoutWrapper>
-              {children}
-            </LayoutWrapper>
-            <Footer />
-          </GSAPProvider>
-        </SmoothScrollProvider>
+    <html lang="en" className={`${bricolage.variable} ${dmSans.variable} ${jetbrains.variable}`}>
+      <body>
+        <SmoothScroll>
+          <Nav />
+          {children}
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   )
